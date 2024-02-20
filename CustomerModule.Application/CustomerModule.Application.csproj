@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>CustomerModule.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CustomerModule.Infrastructure\CustomerModule.Infrastructure.csproj" />
+      <ProjectReference Include="..\SharedModule.Application\SharedModule.Application.csproj" />
+    </ItemGroup>
+
+</Project>
