@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Konfigurationsdatei laden
 var configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // appsettings.json immer laden
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) 
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true) // appsettings.<EnvironmentName>.json laden, falls vorhanden
     .Build();
 
@@ -18,11 +18,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -34,13 +43,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseRouting();
 
-// Aktualisiere den Endpunkt in Program.cs
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers(); // Diese Zeile hinzufügen, um Controller zu verwenden
+    endpoints.MapControllers();
 });
 
 app.Run();

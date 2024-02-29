@@ -25,8 +25,5 @@ public class ApplicationDbContext: DbContext
             .Property(c => c.Id)
             .ValueGeneratedOnAdd()
             .HasDefaultValueSql("NEWID()");;
-        // .HasOne(ci => ci.Customer)
-        // .WithMany(c => c.CustomerInfos)
-        // .HasForeignKey(ci => ci.Customer_Id);
     }
 }
